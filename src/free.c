@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/13 10:25:09 by kvebers          ###   ########.fr       */
+/*   Created: 2023/02/12 17:27:01 by kvebers           #+#    #+#             */
+/*   Updated: 2023/02/12 17:28:36 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "../philo.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-typedef struct data
+void	free_data(t_data *data)
 {
-	int	number_of_philosophers;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-}	t_data;
-
-int		ft_atoi(const char *str);
-int		prot_atoi(char *argv);
-int		check_chars(char *argv);
-int		ft_strlen(const char *str);
-void	free_data(t_data *data);
-#endif
+	free(data);
+}

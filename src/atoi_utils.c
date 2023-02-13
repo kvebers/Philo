@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   atoi_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/13 10:25:09 by kvebers          ###   ########.fr       */
+/*   Created: 2023/02/12 17:25:28 by kvebers           #+#    #+#             */
+/*   Updated: 2023/02/13 10:21:33 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "../philo.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-typedef struct data
+int	ft_strlen(const char *str)
 {
-	int	number_of_philosophers;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-}	t_data;
+	int	counter;
 
-int		ft_atoi(const char *str);
-int		prot_atoi(char *argv);
-int		check_chars(char *argv);
-int		ft_strlen(const char *str);
-void	free_data(t_data *data);
-#endif
+	counter = 0;
+	while (*str++ != 0)
+		counter++;
+	return (counter);
+}
+

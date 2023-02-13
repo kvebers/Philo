@@ -6,14 +6,14 @@
 #    By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/12 12:20:09 by kvebers           #+#    #+#              #
-#    Updated: 2023/02/12 12:29:04 by kvebers          ###   ########.fr        #
+#    Updated: 2023/02/12 17:32:31 by kvebers          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
 CFLAGS	= -Wall -Wextra -Werror
 CC		= cc
-SRC	=	src/philo.c
+SRC	=	src/philo.c src/atoi.c src/atoi_utils.c src/free.c
 RM = 		rm -f
 SRC_O	= $(SRC:%.c=%.o)
 
