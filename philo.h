@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/13 10:25:09 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/13 13:29:52 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct data
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
+	int	times_to_eat;
 }	t_data;
 
 int		ft_atoi(const char *str);
