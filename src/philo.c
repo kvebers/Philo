@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/13 12:09:41 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/13 13:35:38 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	add_values(t_data *data, char *ptr, int cnt)
 		data->time_to_eat = ft_atoi(ptr);
 	else if (cnt == 4)
 		data->time_to_sleep = ft_atoi(ptr);
+	else if (cnt == 5)
+		data->times_to_eat = ft_atoi(ptr);
 }
 
 int	check_values(t_data *data)
@@ -34,18 +36,20 @@ int	check_values(t_data *data)
 		return (0);
 	if (data->time_to_sleep < 0)
 		return (0);
+	if (data->times_to_eat < 0)
+		return (0);
 	return (1);
 }
 
 
-int	parse_inputs(t_data *data, char **argv)
+int	parse_inputs(t_data *data, char **argv, int argc)
 {
 	int		cnt;
 	int		cnt1;
 	char	*ptr;
 
 	cnt = 1;
-	while (cnt < 5)
+	while (cnt < argc)
 	{
 		cnt1 = 0;
 		if (*(argv[cnt]) == ' ')
@@ -70,7 +74,8 @@ int	main(int argc, char **argv)
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	if (data == NULL || argc != 5 || parse_inputs(data, argv) == 0)
+	if (data == NULL || argc < 5 || argc > 6
+		|| parse_inputs(data, argv, argc) == 0)
 	{
 		write(2, "Error\n", 6);
 		return (free(data), 0);
