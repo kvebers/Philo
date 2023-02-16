@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/13 13:35:38 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/15 14:59:50 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	check_values(t_data *data)
 		return (0);
 	return (1);
 }
-
 
 int	parse_inputs(t_data *data, char **argv, int argc)
 {
@@ -80,7 +79,8 @@ int	main(int argc, char **argv)
 		write(2, "Error\n", 6);
 		return (free(data), 0);
 	}
-	if (check_values(data) == 0)
+	if (check_values(data) == 0 || init_philos(data) == 0
+		|| init_forks(data) == 0)
 	{
 		write(2, "Error\n", 6);
 		return (free(data), 0);
