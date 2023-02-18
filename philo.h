@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/15 14:59:29 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/17 12:42:25 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef struct philos
 
 typedef struct data
 {
-	int				number_of_philosophers;
+	int				start;
+	int				nmb_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
@@ -45,6 +46,4 @@ int		check_chars(char *argv);
 int		ft_strlen(const char *str);
 void	free_data(t_data *data);
 int		init_philos(t_data *data);
-int		init_philos(t_data *data);
-int		init_forks(t_data *data);
 #endif

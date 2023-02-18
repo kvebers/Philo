@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:27:01 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/15 14:21:59 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/16 15:37:01 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 void	free_data(t_data *data)
 {
 	free(data->philos);
+	free(data->forks);
 	free(data);
 }
