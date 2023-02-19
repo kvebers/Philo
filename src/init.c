@@ -6,38 +6,11 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/18 11:57:24 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/19 13:56:01 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-void	*do_smt(void *args)
-{
-	t_data		*data;
-
-	data = (t_data *)args;
-	printf("I am inited");
-	while (data->start != 1);
-	printf("I am still alive");
-	return (NULL);
-}
-
-void	destroy_stuff(t_data *data, int i, int j)
-{
-	int	cnt;
-
-	cnt = 0;
-	data->start = 0;
-	while (cnt <= j)
-	{
-		pthread_mutex_destroy(&data->forks[cnt]);
-		pthread_detach(data->philos[cnt].philos);
-		cnt++;
-	}
-	if (i != j)
-		pthread_mutex_destroy(&data->forks[cnt]);
-}
 
 int	init_threads_forks(t_data *data, int i)
 {
@@ -52,7 +25,6 @@ int	init_threads_forks(t_data *data, int i)
 		destroy_stuff(data, i, i);
 		return (0);
 	}
-	usleep(1000);
 	return (1);
 }
 
@@ -84,9 +56,10 @@ int	init_philos(t_data *data)
 		init_philos_utils(data, i);
 		if (init_threads_forks(data, i) == 0)
 			return (free(data->philos), free(data->forks), 0);
+		data->id++;
 		i++;
+		usleep(1000);
 	}
-	while (data->start < 1)
-		data->start++;
+	controller(data);
 	return (1);
 }

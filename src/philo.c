@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/16 16:38:25 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/19 13:44:40 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ int	check_values(t_data *data)
 		return (0);
 	if (data->times_to_eat < 0)
 		return (0);
+	if (pthread_mutex_init(&data->print, NULL) != 0)
+		return (0);
+	data->id = 0;
+	data->start = 0;
 	return (1);
 }
 

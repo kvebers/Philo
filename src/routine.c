@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 17:27:01 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/19 13:20:29 by kvebers          ###   ########.fr       */
+/*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
+/*   Updated: 2023/02/19 13:55:18 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	free_data(t_data *data)
+void    print_test(t_data *data, int i)
 {
-	free(data->philos);
-	free(data->forks);
-	pthread_mutex_destroy(&data->print);
-	free(data);
+    pthread_mutex_lock(&data->print);
+    printf("Thread id %i\n", i);
+    pthread_mutex_unlock(&data->print);
+
 }
 
-void	destroy_stuff(t_data *data, int i, int j)
+void	*do_smt(void *args)
 {
-	int	cnt;
+	t_data		*data;
+	int			thread_id;
 
-	cnt = 0;
-	data->start = 0;
-	while (cnt <= j)
+	data = (t_data *)args;
+	thread_id = data->id;
+	while (data->start != 1)
 	{
-		pthread_mutex_destroy(&data->forks[cnt]);
-		pthread_detach(data->philos[cnt].philos);
-		cnt++;
 	}
-	if (i != j)
-		pthread_mutex_destroy(&data->forks[cnt]);
+    print_test(data, thread_id);
+	return (NULL);
 }
