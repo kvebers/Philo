@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/19 13:59:17 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/02/20 12:30:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ typedef struct philos
 
 typedef struct data
 {
+	int				corpse_id;
 	int				death;
+	int				murder;
 	int				id;
 	int				start;
 	int				nmb_of_philos;
@@ -39,7 +41,7 @@ typedef struct data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_to_eat;
-	struct timeval	sync;
+	long			sync;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
@@ -54,5 +56,7 @@ int		init_philos(t_data *data);
 void	*do_smt(void *args);
 void	controller(t_data *data);
 void	destroy_stuff(t_data *data, int i, int j);
+long	get_time(void);
+void	print_state(t_data *data, int i);
 
 #endif
