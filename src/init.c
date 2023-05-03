@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/19 13:56:01 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/03 14:25:10 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_threads_forks(t_data *data, int i)
 		return (0);
 	}
 	if (pthread_create(&data->philos[i].philos, NULL,
-			&do_smt, (void *) data) != 0)
+			&roulett_of_death, (void *) data) != 0)
 	{
 		destroy_stuff(data, i, i);
 		return (0);
@@ -30,6 +30,7 @@ int	init_threads_forks(t_data *data, int i)
 
 void	init_philos_utils(t_data *data, int i)
 {
+	data->id = i;
 	data->philos[i].id = i;
 	data->philos[i].left_fork = i;
 	data->philos[i].times_ate = 0;
@@ -56,10 +57,8 @@ int	init_philos(t_data *data)
 		init_philos_utils(data, i);
 		if (init_threads_forks(data, i) == 0)
 			return (free(data->philos), free(data->forks), 0);
-		data->id++;
 		i++;
 		usleep(1000);
 	}
-	controller(data);
 	return (1);
 }

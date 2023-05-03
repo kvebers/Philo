@@ -1,5 +1,13 @@
 {
     "files.associations": {
-        "pthread.h": "c"
-    }
+        "pthread.h": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "__locale": "c",
+        "__threading_support": "c",
+        "locale": "c",
+        "memory": "c",
+        "utility": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

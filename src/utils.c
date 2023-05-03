@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 17:27:01 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/03 12:02:50 by kvebers          ###   ########.fr       */
+/*   Created: 2023/05/03 08:55:42 by kvebers           #+#    #+#             */
+/*   Updated: 2023/05/03 12:33:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+#include <errno.h>
 
-void	free_data(t_data *data)
+void	ft_putstr_fd(char *s, int fd)
 {
-	free(data->philos);
-	free(data->forks);
-	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->starving);
+	if (s != NULL)
+		write(fd, s, ft_strlen(s));
 }
 
-void	destroy_stuff(t_data *data, int i, int j)
+int	ft_pthread_mutex_trylock(pthread_mutex_t *mutex)
 {
-	int	cnt;
-
-	cnt = 0;
-	while (cnt <= j)
-	{
-		pthread_mutex_destroy(&data->forks[cnt]);
-		pthread_detach(data->philos[cnt].philos);
-		cnt++;
-	}
-	if (i != j)
-		pthread_mutex_destroy(&data->forks[cnt]);
+	if (pthread_mutex_lock(mutex) != 0)
+		return (EBUSY);
+	else
+		return (0);
 }

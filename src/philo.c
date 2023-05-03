@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/19 18:03:42 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/03 12:03:47 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	check_values(t_data *data)
 		return (0);
 	if (pthread_mutex_init(&data->print, NULL) != 0)
 		return (0);
+	if (pthread_mutex_init(&data->starving, NULL) != 0)
+	{
+		pthread_mutex_destroy(&data->print);
+		return (0);
+	}
 	data->id = 0;
 	data->death = 0;
 	data->murder = 0;
@@ -86,20 +91,22 @@ int	parse_inputs(t_data *data, char **argv, int argc)
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data	data;
 
-	data = malloc(sizeof(t_data));
-	if (data == NULL || argc < 5 || argc > 6
-		|| parse_inputs(data, argv, argc) == 0)
+	if (argc < 5 || argc > 6
+		|| parse_inputs(&data, argv, argc) == 0)
+	{
+		ft_putstr_fd("Proper use ./philo nmb_of_philos, time_to_die, ", 2);
+		ft_putstr_fd("time_to_eat, time_to_sleep, times_to_eat\n", 2);
+		return (0);
+	}
+	if (check_values(&data) == 0 || init_philos(&data) == 0)
 	{
 		write(2, "Error\n", 6);
-		return (free(data), 0);
+		return (0);
 	}
-	if (check_values(data) == 0 || init_philos(data) == 0)
-	{
-		write(2, "Error\n", 6);
-		return (free(data), 0);
-	}
-	free_data(data);
+	controller(&data);
+	destroy_stuff(&data, data.nmb_of_philos, data.nmb_of_philos);
+	free_data(&data);
 	return (0);
 }
