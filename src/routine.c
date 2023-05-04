@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 13:40:59 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/04 16:35:31 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void	print_state(t_data *data, int i, int state)
 	if (state == DEATH)
 	{
 		usleep (1000);
-		printf("\033[31m%ld %i died\n\033[0m", get_time() - data->sync - 1, i + 1);
+		printf("\033[31m%ld %i died\n\033[0m", get_time()
+			- data->sync - 1, i + 1);
 	}
 	else if (state == FORKS)
 		printf("%ld %i has taken a fork\n", display_time(data), i + 1);
 	else if (state == EATING)
+	{
 		printf("%ld %i is eating\n", display_time(data), i + 1);
+		count_meals(data, i);
+	}
 	else if (state == SLEEPING)
 		printf("%ld %i is sleeping\n", display_time(data), i + 1);
 	else if (state == THINKING)
@@ -60,8 +64,6 @@ void	take_forks(t_data *data, int thread_id)
 			= display_time(data) + data->time_to_die;
 		print_state(data, thread_id, EATING);
 	}
-	if (data->murder != 1)
-		
 	if (data->murder != 1)
 		usleep(data->time_to_eat * 1000);
 	drop_forks(data, thread_id);

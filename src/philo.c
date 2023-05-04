@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 13:52:20 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/04 16:07:44 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_values(t_data *data)
 {
 	if (data->nmb_of_philos < 1 || data->time_to_die < 0
 		|| data->time_to_eat < 0 || data->time_to_sleep < 0
-		|| data->times_to_eat < 0)
+		|| data->times_to_eat < -1)
 		return (0);
 	if (pthread_mutex_init(&data->print, NULL) != 0)
 		return (0);
@@ -49,7 +49,7 @@ int	check_values(t_data *data)
 	data->death = 0;
 	data->murder = 0;
 	data->start = 0;
-	data->philos_eaten = 0;
+	data->philos_eaten = data->nmb_of_philos;
 	return (1);
 }
 
@@ -87,6 +87,8 @@ int	parse_inputs(t_data *data, char **argv, int argc)
 		add_values(data, ptr, cnt);
 		cnt++;
 	}
+	if (argc < 6)
+		data->times_to_eat = -1;
 	return (1);
 }
 
