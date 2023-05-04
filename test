@@ -1,0 +1,16 @@
+==931== Helgrind, a thread error detector
+==931== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==931== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==931== Command: ./philo 2 2000 200 200
+==931== 
+==931== 
+==931== Process terminating with default action of signal 2 (SIGINT)
+==931==    at 0x10A19C: roulett_of_death (routine.c:80)
+==931==    by 0x483F876: mythread_wrapper (hg_intercepts.c:387)
+==931==    by 0x4858EA6: start_thread (pthread_create.c:477)
+==931==    by 0x496EA2E: clone (clone.S:95)
+==931== 
+==931== Use --history-level=approx or =none to gain increased speed, at
+==931== the cost of reduced accuracy of conflicting-access information
+==931== For lists of detected and suppressed errors, rerun with: -s
+==931== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

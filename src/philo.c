@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/03 12:03:47 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:52:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,9 @@ void	add_values(t_data *data, char *ptr, int cnt)
 
 int	check_values(t_data *data)
 {
-	if (data->nmb_of_philos < 1)
-		return (0);
-	if (data->time_to_die < 0)
-		return (0);
-	if (data->time_to_eat < 0)
-		return (0);
-	if (data->time_to_sleep < 0)
-		return (0);
-	if (data->times_to_eat < 0)
+	if (data->nmb_of_philos < 1 || data->time_to_die < 0
+		|| data->time_to_eat < 0 || data->time_to_sleep < 0
+		|| data->times_to_eat < 0)
 		return (0);
 	if (pthread_mutex_init(&data->print, NULL) != 0)
 		return (0);
@@ -45,10 +39,17 @@ int	check_values(t_data *data)
 		pthread_mutex_destroy(&data->print);
 		return (0);
 	}
+	if (pthread_mutex_init(&data->food_eaten, NULL) != 0)
+	{
+		pthread_mutex_destroy(&data->starving);
+		pthread_mutex_destroy(&data->print);
+		return (0);
+	}
 	data->id = 0;
 	data->death = 0;
 	data->murder = 0;
 	data->start = 0;
+	data->philos_eaten = 0;
 	return (1);
 }
 
@@ -106,7 +107,6 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	controller(&data);
-	destroy_stuff(&data, data.nmb_of_philos, data.nmb_of_philos);
 	free_data(&data);
 	return (0);
 }

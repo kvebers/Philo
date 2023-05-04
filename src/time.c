@@ -6,11 +6,16 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:07:37 by kvebers           #+#    #+#             */
-/*   Updated: 2023/02/20 11:12:05 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/03 15:22:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+long	display_time(t_data *data)
+{
+	return (get_time() - data->sync);
+}
 
 long	get_time(void)
 {

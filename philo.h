@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/03 13:01:07 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:52:48 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>	
+
+enum e_philos
+{
+	DEATH,
+	FORKS,
+	EATING,
+	SLEEPING,
+	THINKING
+};
 
 typedef struct philos
 {
@@ -37,14 +46,17 @@ typedef struct data
 	int				murder;
 	int				id;
 	int				start;
+	int				philos_eaten;
 	int				nmb_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_to_eat;
 	long			sync;
+	int				regulator;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	food_eaten;
 	pthread_mutex_t	print;
 	pthread_mutex_t	starving;
 }	t_data;
@@ -59,8 +71,11 @@ void	*roulett_of_death(void *args);
 void	controller(t_data *data);
 void	destroy_stuff(t_data *data, int i, int j);
 long	get_time(void);
-void	print_state(t_data *data, int i);
+void	print_state(t_data *data, int i, int state);
 void	ft_putstr_fd(char *s, int fd);
-int		ft_pthread_mutex_trylock(pthread_mutex_t *mutex);
+long	display_time(t_data *data);
+void	close_all_mutexes(t_data *data);
+void	destroy_stuff2(t_data *data, int j);
+void	count_meals(t_data *data, int thread_id);
 
 #endif
