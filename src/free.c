@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:27:01 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 13:51:07 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 18:08:01 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	free_data(t_data *data)
 {
-	free(data->philos);
 	free(data->forks);
+	free(data->philos);
 	pthread_mutex_unlock(&data->starving);
 	pthread_mutex_unlock(&data->print);
 	pthread_mutex_destroy(&data->print);

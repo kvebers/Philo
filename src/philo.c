@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 15:20:20 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 18:10:09 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	handle_1_philo(t_data *data)
 	usleep(data->time_to_die * 1000);
 	printf("\033[31m%ld 1 died\n\033[0m", display_time(data));
 }
-
 
 int	main(int argc, char **argv)
 {
