@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:13:41 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 16:21:34 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 12:13:03 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ void	controller(t_data *data)
 	data->start++;
 	data->sync = get_time();
 	while (data->death != 1 && data->philos_eaten != 0)
+	{
 		data->regulator = display_time(data) / (data->time_to_eat
 				+ data->nmb_of_philos / 12 + 1) % 2;
+	}
 	data->murder = 1;
 	pthread_mutex_lock(&data->starving);
 	if (data->philos_eaten != 0)
 		print_state(data, data->corpse_id, DEATH);
+	usleep(1000);
 	destroy_stuff2(data, data->nmb_of_philos);
 }

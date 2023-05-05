@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 08:55:42 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 13:41:16 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 11:23:53 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,14 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	if (s != NULL)
 		write(fd, s, ft_strlen(s));
+}
+
+int	ft_strlen(const char *str)
+{
+	int	counter;
+
+	counter = 0;
+	while (*str++ != 0)
+		counter++;
+	return (counter);
 }

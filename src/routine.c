@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 16:35:31 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 12:10:40 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	print_state(t_data *data, int i, int state)
 	if (state == DEATH)
 	{
 		usleep (1000);
-		printf("\033[31m%ld %i died\n\033[0m", get_time()
-			- data->sync - 1, i + 1);
+		printf("\033[31m%ld %i died\n\033[0m", display_time(data), i + 1);
 	}
 	else if (state == FORKS)
 		printf("%ld %i has taken a fork\n", display_time(data), i + 1);

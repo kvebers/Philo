@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 16:07:44 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 11:34:27 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,6 @@ int	check_values(t_data *data)
 	return (1);
 }
 
-int	ft_strlen(const char *str)
-{
-	int	counter;
-
-	counter = 0;
-	while (*str++ != 0)
-		counter++;
-	return (counter);
-}
-
 int	parse_inputs(t_data *data, char **argv, int argc)
 {
 	int		cnt;
@@ -92,6 +82,15 @@ int	parse_inputs(t_data *data, char **argv, int argc)
 	return (1);
 }
 
+void	handle_1_philo(t_data *data)
+{
+	data->sync = get_time();
+	printf("%ld 1 has taken a fork\n", display_time(data));
+	usleep(data->time_to_die * 1000);
+	printf("\033[31m%ld 1 died\n\033[0m", display_time(data));
+}
+
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -103,7 +102,12 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("time_to_eat, time_to_sleep, times_to_eat\n", 2);
 		return (0);
 	}
-	if (check_values(&data) == 0 || init_philos(&data) == 0)
+	if (data.nmb_of_philos == 1)
+	{
+		handle_1_philo(&data);
+		return (0);
+	}
+	else if (check_values(&data) == 0 || init_philos(&data) == 0)
 	{
 		write(2, "Error\n", 6);
 		return (0);
