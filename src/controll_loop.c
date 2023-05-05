@@ -6,11 +6,23 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:13:41 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 18:14:05 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 21:14:14 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+int	m_c(t_data *data)
+{
+	pthread_mutex_lock(&data->murdered);
+	if (data->murder != 1)
+	{
+		pthread_mutex_unlock(&data->murdered);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->murdered);
+	return (0);
+}
 
 void	count_meals(t_data *data)
 {

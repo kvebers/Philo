@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 15:05:26 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 20:47:41 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,14 @@ int	init_philos(t_data *data)
 		usleep(1000);
 	}
 	return (1);
+}
+
+void	init_numbs(t_data *data)
+{
+	data->id = 0;
+	data->death = 0;
+	data->murder = 0;
+	data->start = 0;
+	data->philos_eaten = 0;
+	data->total_times_to_eat = data->nmb_of_philos * data->times_to_eat;
 }

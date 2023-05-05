@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 18:10:09 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 21:02:36 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,23 @@ void	add_values(t_data *data, char *ptr, int cnt)
 
 int	check_values(t_data *data)
 {
-	if (data->nmb_of_philos < 1 || data->time_to_die < 0
-		|| data->time_to_eat < 0 || data->time_to_sleep < 0
+	if (data->nmb_of_philos < 1 || data->time_to_die < 60
+		|| data->time_to_eat < 60 || data->time_to_sleep < 60
 		|| data->times_to_eat < -1)
+		return (0);
+	if (data->nmb_of_philos > 200 || data->time_to_die > 10000
+		|| data->time_to_eat > 10000 || data->time_to_sleep > 10000
+		|| data->times_to_eat > 1000)
 		return (0);
 	if (pthread_mutex_init(&data->print, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&data->starving, NULL) != 0)
-	{
-		pthread_mutex_destroy(&data->print);
 		return (0);
-	}
 	if (pthread_mutex_init(&data->food_eaten, NULL) != 0)
-	{
-		pthread_mutex_destroy(&data->starving);
-		pthread_mutex_destroy(&data->print);
 		return (0);
-	}
-	data->id = 0;
-	data->death = 0;
-	data->murder = 0;
-	data->start = 0;
-	data->philos_eaten = 0;
-	data->total_times_to_eat = data->nmb_of_philos * data->times_to_eat;
+	if (pthread_mutex_init(&data->murdered, NULL) != 0)
+		return (0);
+	init_numbs(data);
 	return (1);
 }
 

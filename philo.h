@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 15:21:17 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 21:14:24 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct data
 	pthread_mutex_t	food_eaten;
 	pthread_mutex_t	print;
 	pthread_mutex_t	starving;
+	pthread_mutex_t	murdered;
 }	t_data;
 
 int		ft_atoi(const char *str);
@@ -77,5 +78,6 @@ long	display_time(t_data *data);
 void	close_all_mutexes(t_data *data);
 void	destroy_stuff2(t_data *data, int j);
 void	count_meals(t_data *data);
-
+void	init_numbs(t_data *data);
+int		m_c(t_data *data);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 17:27:01 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 18:08:01 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 21:23:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_data(t_data *data)
 	pthread_mutex_unlock(&data->print);
 	pthread_mutex_destroy(&data->print);
 	pthread_mutex_destroy(&data->starving);
+	pthread_mutex_destroy(&data->murdered);
 	pthread_mutex_destroy(&data->food_eaten);
 }
 
@@ -52,12 +53,6 @@ void	destroy_stuff2(t_data *data, int j)
 	while (cnt < j)
 	{
 		pthread_mutex_destroy(&data->forks[cnt]);
-		cnt++;
-	}
-	cnt = 0;
-	while (cnt < j)
-	{
-		pthread_detach(data->philos[cnt].philos);
 		cnt++;
 	}
 	cnt = 0;

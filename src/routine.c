@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 15:54:49 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 21:15:37 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,26 @@ void	drop_forks(t_data *data, int thread_id)
 void	take_forks(t_data *data, int thread_id)
 {
 	pthread_mutex_lock(&data->forks[data->philos[thread_id].left_fork]);
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 		print_state(data, thread_id, FORKS);
 	pthread_mutex_lock(&data->forks[data->philos[thread_id].right_fork]);
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 		print_state(data, thread_id, FORKS);
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 	{
 		data->philos[thread_id].time_to_death
 			= display_time(data) + data->time_to_die;
 		print_state(data, thread_id, EATING);
 		count_meals(data);
 	}
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 		usleep(data->time_to_eat * 1000);
 	drop_forks(data, thread_id);
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 		print_state(data, thread_id, SLEEPING);
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 		usleep(data->time_to_sleep * 1000);
-	if (data->murder != 1)
+	if (m_c(data) == 1)
 		print_state(data, thread_id, THINKING);
 }
 
@@ -94,8 +94,6 @@ void	*roulett_of_death(void *args)
 		if (data->sync + data->philos[thread_id].time_to_death
 			< get_time() && data->murder != 1)
 			self_report_death(data, thread_id);
-		if (data->murder == 2)
-			break ;
 	}
 	return (NULL);
 }
