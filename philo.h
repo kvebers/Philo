@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 13:52:48 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:21:17 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ enum e_philos
 typedef struct philos
 {
 	int			id;
-	int			times_ate;
 	int			time_to_death;
 	int			right_fork;
 	int			left_fork;
@@ -54,6 +53,7 @@ typedef struct data
 	int				times_to_eat;
 	long			sync;
 	int				regulator;
+	int				total_times_to_eat;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	food_eaten;
@@ -76,6 +76,6 @@ void	ft_putstr_fd(char *s, int fd);
 long	display_time(t_data *data);
 void	close_all_mutexes(t_data *data);
 void	destroy_stuff2(t_data *data, int j);
-void	count_meals(t_data *data, int thread_id);
+void	count_meals(t_data *data);
 
 #endif

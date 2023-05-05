@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/04 13:52:31 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:05:26 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	init_philos_utils(t_data *data, int i)
 	data->id = i;
 	data->philos[i].id = i;
 	data->philos[i].left_fork = i;
-	data->philos[i].times_ate = 0;
 	data->philos[i].time_to_death = data->time_to_die;
 	if (i != data->nmb_of_philos - 1)
 		data->philos[i].right_fork = i + 1;

@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:02:59 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 11:34:27 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:20:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	check_values(t_data *data)
 	data->death = 0;
 	data->murder = 0;
 	data->start = 0;
-	data->philos_eaten = data->nmb_of_philos;
+	data->philos_eaten = 0;
+	data->total_times_to_eat = data->nmb_of_philos * data->times_to_eat;
 	return (1);
 }
 
