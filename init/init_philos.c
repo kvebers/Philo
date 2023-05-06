@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_philos.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 20:47:41 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:54:08 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ int	init_threads_forks(t_data *data, int i)
 void	init_philos_utils(t_data *data, int i)
 {
 	data->id = i;
+	data->philos[i].i.nmb_of_philos = data->i.nmb_of_philos;
+	data->philos[i].i.time_to_die = data->i.time_to_die;
+	data->philos[i].i.time_to_eat = data->i.time_to_eat;
+	data->philos[i].i.time_to_sleep = data->i.time_to_sleep;
+	data->philos[i].i.times_to_eat = data->i.times_to_eat;
 	data->philos[i].id = i;
 	data->philos[i].left_fork = i;
-	data->philos[i].time_to_death = data->time_to_die;
-	if (i != data->nmb_of_philos - 1)
+	data->philos[i].time_to_death = data->i.time_to_die;
+	if (i != data->i.nmb_of_philos - 1)
 		data->philos[i].right_fork = i + 1;
 	else
 		data->philos[i].right_fork = 0;
@@ -45,13 +50,13 @@ int	init_philos(t_data *data)
 	int	i;
 
 	i = 0;
-	data->philos = malloc(sizeof(t_philo) * data->nmb_of_philos);
+	data->philos = malloc(sizeof(t_philo) * data->i.nmb_of_philos);
 	if (data->philos == NULL)
 		return (0);
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->nmb_of_philos);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->i.nmb_of_philos);
 	if (data->forks == NULL)
 		return (free(data->philos), 0);
-	while (i < data->nmb_of_philos)
+	while (i < data->i.nmb_of_philos)
 	{
 		init_philos_utils(data, i);
 		if (init_threads_forks(data, i) == 0)
@@ -60,14 +65,4 @@ int	init_philos(t_data *data)
 		usleep(1000);
 	}
 	return (1);
-}
-
-void	init_numbs(t_data *data)
-{
-	data->id = 0;
-	data->death = 0;
-	data->murder = 0;
-	data->start = 0;
-	data->philos_eaten = 0;
-	data->total_times_to_eat = data->nmb_of_philos * data->times_to_eat;
 }

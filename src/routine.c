@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 21:15:37 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:00:54 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ void	take_forks(t_data *data, int thread_id)
 	if (m_c(data) == 1)
 	{
 		data->philos[thread_id].time_to_death
-			= display_time(data) + data->time_to_die;
+			= display_time(data) + data->i.time_to_die;
 		print_state(data, thread_id, EATING);
 		count_meals(data);
 	}
 	if (m_c(data) == 1)
-		usleep(data->time_to_eat * 1000);
+		usleep(data->i.time_to_eat * 1000);
 	drop_forks(data, thread_id);
 	if (m_c(data) == 1)
 		print_state(data, thread_id, SLEEPING);
 	if (m_c(data) == 1)
-		usleep(data->time_to_sleep * 1000);
+		usleep(data->i.time_to_sleep * 1000);
 	if (m_c(data) == 1)
 		print_state(data, thread_id, THINKING);
 }
@@ -86,10 +86,10 @@ void	*roulett_of_death(void *args)
 	{
 		usleep (100);
 		if (data->regulator == thread_id % 2 && data->murder != 1
-			&& data->nmb_of_philos % 2 == 0)
+			&& data->i.nmb_of_philos % 2 == 0)
 			take_forks(data, thread_id);
 		else if (data->regulator == thread_id % 3 && data->murder != 1
-			&& data->nmb_of_philos % 2 == 1)
+			&& data->i.nmb_of_philos % 2 == 1)
 			take_forks(data, thread_id);
 		if (data->sync + data->philos[thread_id].time_to_death
 			< get_time() && data->murder != 1)

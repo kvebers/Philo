@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 21:14:24 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:55:34 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,18 @@ enum e_philos
 	THINKING
 };
 
+typedef struct input
+{
+	int				nmb_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				times_to_eat;
+}	t_input;
+
 typedef struct philos
 {
+	t_input		i;
 	int			id;
 	int			time_to_death;
 	int			right_fork;
@@ -40,21 +50,17 @@ typedef struct philos
 
 typedef struct data
 {
+	t_philo			*philos;
+	t_input			i;
 	int				corpse_id;
 	int				death;
 	int				murder;
 	int				id;
 	int				start;
-	int				philos_eaten;
-	int				nmb_of_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				times_to_eat;
-	long			sync;
 	int				regulator;
+	int				philos_eaten;
 	int				total_times_to_eat;
-	t_philo			*philos;
+	long			sync;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	food_eaten;
 	pthread_mutex_t	print;
@@ -62,10 +68,18 @@ typedef struct data
 	pthread_mutex_t	murdered;
 }	t_data;
 
+
+// Utils //
 int		ft_atoi(const char *str);
 int		prot_atoi(char *argv);
 int		check_chars(char *argv);
 int		ft_strlen(const char *str);
+
+// 1_philo //
+void	handle_1_philo(t_data *data);
+// init_mutex
+int		init_mutex(t_data *data);
+
 void	free_data(t_data *data);
 int		init_philos(t_data *data);
 void	*roulett_of_death(void *args);
@@ -79,5 +93,7 @@ void	close_all_mutexes(t_data *data);
 void	destroy_stuff2(t_data *data, int j);
 void	count_meals(t_data *data);
 void	init_numbs(t_data *data);
+int		check_values(t_data *data);
+int		parse_inputs(t_data *data, char **argv, int argc);
 int		m_c(t_data *data);
 #endif
