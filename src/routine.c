@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/06 16:54:03 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 17:16:51 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ void	take_forks(t_data *data, int thread_id)
 	{
 		data->philos[thread_id].time_to_death
 			= display_time(data) + data->i.time_to_die;
+		print_state(data, thread_id, EATING);
 		data->philos[thread_id].expected_time = get_time()
 			+ data->philos[thread_id].i.time_to_eat
-			* data->philos[thread_id].offset - 10;
-		print_state(data, thread_id, EATING);
+			* data->philos[thread_id].offset - 10000;
+		printf("%d\n", data->philos[thread_id].offset);
 		count_meals(data);
 	}
 	if (m_c(data) == 1)
@@ -79,18 +80,17 @@ void	*roulett_of_death(void *args)
 	data = (t_data *)args;
 	thread_id = data->id;
 	pthread_mutex_lock(&data->start);
-	data->philos[thread_id].sync = data->sync;
-	pthread_mutex_unlock(&data->start);
 	data->philos[thread_id].expected_time
 		= data->philos[thread_id].expected_time
-		+ data->philos[thread_id].sync;
+		+ data->sync;
+	pthread_mutex_unlock(&data->start);
 	while (data->murder != 1)
 	{
 		usleep (100);
 		if (get_time() > data->philos[thread_id].expected_time
 			&& m_c(data) == 1)
 			take_forks(data, thread_id);
-		if (data->philos[thread_id].sync + data->philos[thread_id].time_to_death
+		if (data->sync + data->philos[thread_id].time_to_death
 			< get_time() && m_c(data))
 			self_report_death(data, thread_id);
 	}
