@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/06 11:54:08 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 15:44:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ int	init_threads_forks(t_data *data, int i)
 void	init_philos_utils(t_data *data, int i)
 {
 	data->id = i;
+	if (data->i.nmb_of_philos % 2 == 0)
+		data->philos[i].offset = 1;
+	data->philos[i].offset = 2;
+	if (data->philos[i].offset == 1 && i % 2 == 1)
+		data->philos[i].expected_time = data->i.time_to_eat * 1000;
+	else if (data->philos[i].offset == 2 && i % 2 == 1)
+		data->philos[i].expected_time = data->i.time_to_eat * 1000;
+	else if (data->philos[i].offset == 2 && i % 2 == 2)
+		data->philos[i].expected_time = 2 * data->i.time_to_eat * 1000;
+	else
+		data->philos[i].expected_time = 0;
+	printf("%ld\n", data->philos[i].expected_time);
 	data->philos[i].i.nmb_of_philos = data->i.nmb_of_philos;
 	data->philos[i].i.time_to_die = data->i.time_to_die;
 	data->philos[i].i.time_to_eat = data->i.time_to_eat;
@@ -56,6 +68,7 @@ int	init_philos(t_data *data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->i.nmb_of_philos);
 	if (data->forks == NULL)
 		return (free(data->philos), 0);
+	pthread_mutex_lock(&data->start);
 	while (i < data->i.nmb_of_philos)
 	{
 		init_philos_utils(data, i);
@@ -64,5 +77,8 @@ int	init_philos(t_data *data)
 		i++;
 		usleep(1000);
 	}
+	usleep(1000);
+	data->sync = get_time();
+	pthread_mutex_unlock(&data->start);
 	return (1);
 }

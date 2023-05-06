@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:46:30 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/06 10:51:01 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 15:40:07 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	init_mutex(t_data *data)
 	if (pthread_mutex_init(&data->food_eaten, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&data->murdered, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&data->start, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&data->timer, NULL) != 0)
 		return (0);
 	return (1);
 }

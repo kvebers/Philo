@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/06 11:00:54 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 15:59:13 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ void	print_state(t_data *data, int i, int state)
 {
 	pthread_mutex_lock(&data->print);
 	if (state == DEATH)
-	{
-		usleep (1000);
 		printf("\033[31m%ld %i died\n\033[0m", display_time(data), i + 1);
-	}
 	else if (state == FORKS)
 		printf("%ld %i has taken a fork\n", display_time(data), i + 1);
 	else if (state == EATING)
@@ -28,8 +25,7 @@ void	print_state(t_data *data, int i, int state)
 		printf("%ld %i is sleeping\n", display_time(data), i + 1);
 	else if (state == THINKING)
 		printf("%ld %i is thinking\n", display_time(data), i + 1);
-	if (state != DEATH)
-		pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(&data->print);
 }
 
 void	self_report_death(t_data *data, int thread_id)
@@ -58,6 +54,9 @@ void	take_forks(t_data *data, int thread_id)
 	{
 		data->philos[thread_id].time_to_death
 			= display_time(data) + data->i.time_to_die;
+		data->philos[thread_id].expected_time = get_time()
+			+ data->philos[thread_id].i.time_to_eat
+			* data->philos[thread_id].offset;
 		print_state(data, thread_id, EATING);
 		count_meals(data);
 	}
@@ -79,20 +78,19 @@ void	*roulett_of_death(void *args)
 
 	data = (t_data *)args;
 	thread_id = data->id;
-	while (data->start != 1)
-	{
-	}
+	pthread_mutex_lock(&data->start);
+	data->philos[thread_id].sync = data->sync;
+	pthread_mutex_unlock(&data->start);
+	data->philos[thread_id].expected_time
+		= data->philos[thread_id].expected_time + data->sync;
 	while (data->murder != 1)
 	{
 		usleep (100);
-		if (data->regulator == thread_id % 2 && data->murder != 1
-			&& data->i.nmb_of_philos % 2 == 0)
+		if (get_time() > data->philos[thread_id].expected_time
+			&& m_c(data) == 1)
 			take_forks(data, thread_id);
-		else if (data->regulator == thread_id % 3 && data->murder != 1
-			&& data->i.nmb_of_philos % 2 == 1)
-			take_forks(data, thread_id);
-		if (data->sync + data->philos[thread_id].time_to_death
-			< get_time() && data->murder != 1)
+		if (data->philos[thread_id].sync + data->philos[thread_id].time_to_death
+			< get_time() && m_c(data))
 			self_report_death(data, thread_id);
 	}
 	return (NULL);

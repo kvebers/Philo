@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:07:37 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/03 15:22:20 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 15:35:17 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 long	display_time(t_data *data)
 {
-	return (get_time() - data->sync);
+	int	time;
+
+	pthread_mutex_lock(&data->timer);
+	time = get_time() - data->sync;
+	pthread_mutex_unlock(&data->timer);
+	return (time);
+
 }
 
 long	get_time(void)

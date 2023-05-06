@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:04:10 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/06 10:57:48 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 12:25:26 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	check_values(t_data *data)
 		|| data->i.time_to_eat < 60 || data->i.time_to_sleep < 60
 		|| data->i.times_to_eat < -1)
 		return (0);
-	if (data->i.nmb_of_philos > 200 || data->i.time_to_die > 10000
-		|| data->i.time_to_eat > 10000 || data->i.time_to_sleep > 10000
-		|| data->i.times_to_eat > 1000)
+	if (data->i.nmb_of_philos > 200 || data->i.time_to_die > 100000
+		|| data->i.time_to_eat > 100000 || data->i.time_to_sleep > 100000
+		|| data->i.times_to_eat > 10000)
 		return (0);
 	if (data->i.nmb_of_philos == 1)
 	{
@@ -81,7 +81,6 @@ void	init_numbs(t_data *data)
 	data->id = 0;
 	data->death = 0;
 	data->murder = 0;
-	data->start = 0;
 	data->philos_eaten = 0;
 	data->total_times_to_eat = data->i.nmb_of_philos * data->i.times_to_eat;
 }

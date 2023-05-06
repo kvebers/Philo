@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/06 11:55:34 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/06 15:40:16 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ typedef struct input
 typedef struct philos
 {
 	t_input		i;
+	long		expected_time;
+	int			offset;
 	int			id;
+	long		sync;
 	int			time_to_death;
 	int			right_fork;
 	int			left_fork;
@@ -56,12 +59,13 @@ typedef struct data
 	int				death;
 	int				murder;
 	int				id;
-	int				start;
 	int				regulator;
 	int				philos_eaten;
 	int				total_times_to_eat;
 	long			sync;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	start;
+	pthread_mutex_t	timer;
 	pthread_mutex_t	food_eaten;
 	pthread_mutex_t	print;
 	pthread_mutex_t	starving;
