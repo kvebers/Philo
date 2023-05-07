@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 13:51:11 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/07 15:53:11 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct input
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_to_eat;
+	int				mp;
+	long			time_to_death;
+	long			expected_time;
 	long			sync;
 }	t_input;
 
