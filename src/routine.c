@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/05 21:15:37 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/07 14:20:20 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	print_state(t_data *data, int i, int state)
 		printf("%ld %i is sleeping\n", display_time(data), i + 1);
 	else if (state == THINKING)
 		printf("%ld %i is thinking\n", display_time(data), i + 1);
-	if (state != DEATH)
-		pthread_mutex_unlock(&data->print);
+	pthread_mutex_unlock(&data->print);
 }
 
 void	self_report_death(t_data *data, int thread_id)
