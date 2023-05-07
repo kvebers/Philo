@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 10:12:16 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/07 11:17:25 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,6 @@ int	init_threads_forks(t_data *data, int i)
 void	init_philos_utils(t_data *data, int i)
 {
 	data->id = i;
-	if (data->i.nmb_of_philos % 2 == 0)
-		data->philos[i].offset = 1;
-	else
-		data->philos[i].offset = 2;
-	if (data->philos[i].offset == 1 && i % 2 == 1)
-		data->philos[i].expected_time = data->i.time_to_eat - 10;
-	else if (data->philos[i].offset == 2 && i % 2 == 1)
-		data->philos[i].expected_time = data->i.time_to_eat - 10;
-	else if (data->philos[i].offset == 2 && i % 2 == 2)
-		data->philos[i].expected_time = 2 * data->i.time_to_eat - 10;
-	else
-		data->philos[i].expected_time = 0;
-	data->philos[i].i.nmb_of_philos = data->i.nmb_of_philos;
-	data->philos[i].i.time_to_die = data->i.time_to_die;
-	data->philos[i].i.time_to_eat = data->i.time_to_eat;
-	data->philos[i].i.time_to_sleep = data->i.time_to_sleep;
-	data->philos[i].i.times_to_eat = data->i.times_to_eat;
 	data->philos[i].id = i;
 	data->philos[i].left_fork = i;
 	data->philos[i].time_to_death = data->i.time_to_die;
