@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   1_philo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/20 11:07:37 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 12:46:59 by kvebers          ###   ########.fr       */
+/*   Created: 2023/05/06 10:09:54 by kvebers           #+#    #+#             */
+/*   Updated: 2023/05/07 12:47:58 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-long	display_time(int sync)
+void	handle_1_philo(t_data *data)
 {
-	int	time;
-
-	time = get_time() - sync;
-	return (time);
-}
-
-long	get_time(void)
-{
-	long			time;
-	struct timeval	timer;
-
-	gettimeofday(&timer, NULL);
-	time = timer.tv_sec * 1000 + timer.tv_usec / 1000;
-	return (time);
+	data->sync = get_time();
+	printf("%ld 1 has taken a fork\n", display_time(data->sync));
+	usleep(data->i.time_to_die * 1000);
+	printf("\033[31m%ld 1 died\n\033[0m", display_time(data->sync));
 }
