@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/08 11:58:59 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/08 12:14:01 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,6 @@ void	take_forks(t_data *data, int thread_id, t_input *local)
 		print_thinking(data, thread_id, local->sync);
 }
 
-void	init_local(t_data *data, t_input *local, int thread_id)
-{
-	local->nmb_of_philos = data->i.nmb_of_philos;
-	local->time_to_die = data->i.time_to_die;
-	local->time_to_eat = data->i.time_to_eat;
-	local->time_to_sleep = data->i.time_to_sleep;
-	local->times_to_eat = data->i.times_to_eat;
-	local->sync = get_time();
-	local->time_to_death = display_time(local->sync) + local->time_to_die;
-	if (local->nmb_of_philos % 2 == 0)
-	{
-		local->mp = 1;
-		if (thread_id % 2 == 0)
-			local->expected_time = display_time(local->sync) + local->time_to_eat;
-		else
-			local->expected_time = display_time(local->sync);
-	}
-	else
-	{
-		local->mp = 2;
-		if (thread_id % 3 == 0)
-			local->expected_time = display_time(local->sync) + local->time_to_eat;
-		else if (thread_id % 3 == 1)
-			local->expected_time = display_time(local->sync) + local->time_to_eat * 2;
-		else
-			local->expected_time = display_time(local->sync);
-	}
-}
-
-
 void	*roulett_of_death(void *args)
 {
 	t_data	*data;
@@ -75,7 +45,7 @@ void	*roulett_of_death(void *args)
 
 	data = (t_data *)args;
 	thread_id = data->id;
-	init_local(data, &local, thread_id);
+	init_local(data, &local);
 	pthread_mutex_lock(&data->start);
 	local.sync = data->sync;
 	pthread_mutex_unlock(&data->start);
