@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 15:55:36 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/08 11:58:59 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	take_forks(t_data *data, int thread_id, t_input *local)
 	{
 		print_fork(data, thread_id, local->sync);
 		local->time_to_death = display_time(local->sync) + local->time_to_die;
-		local->expected_time = display_time(local->sync) + local->time_to_eat * local->mp - 5;
+		local->expected_time = local->time_to_death - 20;
 		print_eating(data, thread_id, local->sync);
 		count_meals(data);
 		usleep(local->time_to_eat * 1000);
@@ -44,25 +44,25 @@ void	init_local(t_data *data, t_input *local, int thread_id)
 	local->time_to_eat = data->i.time_to_eat;
 	local->time_to_sleep = data->i.time_to_sleep;
 	local->times_to_eat = data->i.times_to_eat;
-	local->time_to_death = get_time() + local->time_to_die;
+	local->sync = get_time();
+	local->time_to_death = display_time(local->sync) + local->time_to_die;
 	if (local->nmb_of_philos % 2 == 0)
 	{
 		local->mp = 1;
 		if (thread_id % 2 == 0)
-			local->expected_time = get_time() + local->time_to_eat;
+			local->expected_time = display_time(local->sync) + local->time_to_eat;
 		else
-			local->expected_time = get_time();
+			local->expected_time = display_time(local->sync);
 	}
 	else
 	{
 		local->mp = 2;
-		local->expected_time = get_time();
 		if (thread_id % 3 == 0)
-			local->expected_time = get_time() + local->time_to_eat;
+			local->expected_time = display_time(local->sync) + local->time_to_eat;
 		else if (thread_id % 3 == 1)
-			local->expected_time = get_time() + local->time_to_eat * 2;
+			local->expected_time = display_time(local->sync) + local->time_to_eat * 2;
 		else
-			local->expected_time = get_time();
+			local->expected_time = display_time(local->sync);
 	}
 }
 
@@ -81,7 +81,7 @@ void	*roulett_of_death(void *args)
 	pthread_mutex_unlock(&data->start);
 	while (data->murder != 1)
 	{
-		if (local.expected_time < get_time())
+		if (local.expected_time < display_time(local.sync))
 			take_forks(data, thread_id, &local);
 		if (local.time_to_death < display_time(local.sync) && m_c(data) == 1)
 			self_report_death(data, thread_id);
