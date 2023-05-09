@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:13:41 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 18:07:07 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:29:59 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	count_meals(t_data *data)
 
 void	controller(t_data *data)
 {
+	data->sync = get_time() - 1;
 	usleep(1000);
 	data->sync = get_time();
 	pthread_mutex_unlock(&data->start);

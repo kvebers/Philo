@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 18:14:04 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:29:30 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	take_forks(t_data *data, int thread_id, t_input *i, t_philo *philo)
 	{
 		print_eating(data, thread_id, philo, i);
 		count_meals(data);
-		// // timer_loop(data, i->time_to_eat);
-		usleep(i->time_to_eat);
+		timer_loop(data, i->time_to_eat);
 		drop_forks(data, thread_id);
 		print_sleep(data, thread_id);
 		timer_loop(data, i->time_to_sleep);
@@ -54,7 +53,6 @@ void	take_forks(t_data *data, int thread_id, t_input *i, t_philo *philo)
 
 void	finall_setup(t_data *data, int thread_id, t_philo *philo, t_input *i)
 {
-	data->sync = get_time();
 	if (i->nmb_of_philos % 2 == 0)
 	{
 		if (thread_id % 2 == 0)
