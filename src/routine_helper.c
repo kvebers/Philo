@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   routine_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/20 11:07:37 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 12:46:59 by kvebers          ###   ########.fr       */
+/*   Created: 2023/05/07 11:42:04 by kvebers           #+#    #+#             */
+/*   Updated: 2023/05/07 11:42:24 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-long	display_time(int sync)
+void	self_report_death(t_data *data, int thread_id)
 {
-	int	time;
-
-	time = get_time() - sync;
-	return (time);
+	pthread_mutex_lock(&data->starving);
+	data->corpse_id = thread_id;
+	data->death = 1;
+	pthread_mutex_unlock(&data->starving);
 }
 
-long	get_time(void)
+void	drop_forks(t_data *data, int thread_id)
 {
-	long			time;
-	struct timeval	timer;
-
-	gettimeofday(&timer, NULL);
-	time = timer.tv_sec * 1000 + timer.tv_usec / 1000;
-	return (time);
+	pthread_mutex_unlock(&data->forks[data->philos[thread_id].left_fork]);
+	pthread_mutex_unlock(&data->forks[data->philos[thread_id].right_fork]);
 }
