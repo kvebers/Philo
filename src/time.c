@@ -6,18 +6,15 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:07:37 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 12:46:59 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/08 12:49:04 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-long	display_time(int sync)
+long	display_time(t_data *data)
 {
-	int	time;
-
-	time = get_time() - sync;
-	return (time);
+	return (get_time() - data->sync);
 }
 
 long	get_time(void)

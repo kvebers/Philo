@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/07 15:53:11 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/08 12:52:04 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct data
 	t_input			i;
 	int				corpse_id;
 	int				death;
+	int				regulator;
 	int				murder;
 	int				murder1;
 	int				id;
@@ -106,17 +107,17 @@ void	drop_forks(t_data *data, int thread_id);
 // Time
 void	sleep_time(t_data *data, int time);
 long	get_time(void);
-long	display_time(int sync);
+long	display_time(t_data *data);
 
 //Free
 void	destroy_stuff2(t_data *data, int j);
 void	destroy_stuff(t_data *data, int i, int j);
 
 //print_state
-void	print_state(t_data *data, int i, int sync);
-void	print_sleep(t_data *data, int i, int sync);
-void	print_fork(t_data *data, int i, int sync);
-void	print_eating(t_data *data, int i, int sync);
-void	print_thinking(t_data *data, int i, int sync);
+void	print_state(t_data *data, int i);
+void	print_sleep(t_data *data, int i);
+void	print_fork(t_data *data, int i);
+void	print_eating(t_data *data, int i);
+void	print_thinking(t_data *data, int i);
 
 #endif
