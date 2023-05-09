@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:04:10 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 18:03:18 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:35:26 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	init_numbs(t_data *data)
 	else
 		data->i.mp = data->i.times_to_eat * 3;
 }
-

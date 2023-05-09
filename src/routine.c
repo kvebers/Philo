@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 18:29:30 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:35:15 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	finall_setup(t_data *data, int thread_id, t_philo *philo, t_input *i)
 		+ i->time_to_die;
 	data->total_inits++;
 }
-
-
 
 void	*roulett_of_death(void *args)
 {
