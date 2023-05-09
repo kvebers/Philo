@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 18:07:13 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:35:33 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct data
 	pthread_mutex_t	murdered;
 	pthread_mutex_t	add;
 }	t_data;
-
 
 // Utils //
 int		ft_atoi(const char *str);
