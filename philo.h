@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/08 12:52:04 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 12:55:28 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct input
 	int				times_to_eat;
 	int				mp;
 	long			time_to_death;
-	long			expected_time;
 	long			sync;
 }	t_input;
 
@@ -49,6 +48,7 @@ typedef struct philos
 	int			right_fork;
 	int			left_fork;
 	int			death;
+	long		potato;
 	pthread_t	philos;
 }	t_philo;
 
@@ -58,7 +58,6 @@ typedef struct data
 	t_input			i;
 	int				corpse_id;
 	int				death;
-	int				regulator;
 	int				murder;
 	int				murder1;
 	int				id;
@@ -72,6 +71,7 @@ typedef struct data
 	pthread_mutex_t	print;
 	pthread_mutex_t	starving;
 	pthread_mutex_t	murdered;
+	pthread_mutex_t	add;
 }	t_data;
 
 
@@ -117,7 +117,7 @@ void	destroy_stuff(t_data *data, int i, int j);
 void	print_state(t_data *data, int i);
 void	print_sleep(t_data *data, int i);
 void	print_fork(t_data *data, int i);
-void	print_eating(t_data *data, int i);
+void	print_eating(t_data *data, int i, t_philo *philo, t_input *input);
 void	print_thinking(t_data *data, int i);
 
 #endif

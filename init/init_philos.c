@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 11:03:16 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/08 11:51:30 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 13:58:31 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,5 @@ int	init_philos(t_data *data)
 		i++;
 		usleep(1000);
 	}
-	usleep(100000);
-	data->sync = get_time();
-	pthread_mutex_unlock(&data->start);
 	return (1);
 }

@@ -6,59 +6,104 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 13:11:26 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/08 13:41:05 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 13:59:56 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	take_forks(t_data *data, int thread_id)
+void	timer_loop(t_data *data, int time)
 {
-	pthread_mutex_lock(&data->forks[data->philos[thread_id].left_fork]);
-	if (m_c1(data) == 1)
-		print_fork(data, thread_id);
-	pthread_mutex_lock(&data->forks[data->philos[thread_id].right_fork]);
-	if (m_c(data) == 1)
-		print_fork(data, thread_id);
-	if (m_c1(data) == 1)
+	long	time_passed;
+
+	time_passed = display_time(data);
+	while (time_passed + time > display_time(data))
 	{
-		data->philos[thread_id].time_to_death
-			= display_time(data) + data->i.time_to_die;
-		print_eating(data, thread_id);
-		count_meals(data);
+		if (m_c(data) == 0)
+			break ;
+		if (data->i.nmb_of_philos < 50)
+			usleep(100);
+		else
+			usleep(1000);
 	}
-	if (m_c(data) == 1)
-		usleep(data->i.time_to_eat * 1000);
-	drop_forks(data, thread_id);
-	if (m_c1(data) == 1)
-		print_sleep(data, thread_id);
-	if (m_c(data) == 1)
-		usleep(data->i.time_to_sleep * 1000);
-	if (m_c1(data) == 1)
-		print_thinking(data, thread_id);
 }
+
+void	take_forks(t_data *data, int thread_id, t_input *i, t_philo *philo)
+{
+	pthread_mutex_lock(&data->forks[philo->left_fork]);
+	print_fork(data, thread_id);
+	pthread_mutex_lock(&data->forks[philo->right_fork]);
+	print_fork(data, thread_id);
+	if (philo->time_to_death < display_time(data))
+	{
+		self_report_death(data, thread_id);
+		drop_forks(data, thread_id);
+	}
+	else
+	{
+		print_eating(data, thread_id, philo, i);
+		count_meals(data);
+		timer_loop(data, i->time_to_eat);
+		drop_forks(data, thread_id);
+		print_sleep(data, thread_id);
+		timer_loop(data, i->time_to_sleep);
+		print_thinking(data, thread_id);
+	}
+}
+
+void	finall_setup(t_data *data, int thread_id, t_philo *philo, t_input *i)
+{
+	philo->potato = 0;
+	if (i->nmb_of_philos % 2 == 0)
+	{
+		if (thread_id % 2 == 0)
+			philo->potato = 0;
+		else if (thread_id % 2 == 1)
+			philo->potato = display_time(data)
+				+ i->time_to_eat;
+	}
+	else
+	{
+		if (thread_id % 2 == 0)
+			philo->potato = 0;
+		else if (thread_id % 2 == 1)
+			philo->potato = display_time(data)
+				+ i->time_to_eat;
+		if (thread_id == data->i.nmb_of_philos - 1)
+		{
+			philo->potato = display_time(data)
+				+ i->time_to_eat * 2;
+			data->sync = get_time();
+		}
+	}
+	philo->time_to_death = display_time(data)
+		+ i->time_to_die;
+}
+
+
 
 void	*roulett_of_death(void *args)
 {
 	t_data	*data;
 	int		thread_id;
+	t_philo	*philo;
+	t_input	*input;
 
 	data = (t_data *)args;
 	thread_id = data->id;
+	philo = &data->philos[thread_id];
+	input = &data->i;
 	pthread_mutex_lock(&data->start);
+	finall_setup(data, thread_id, philo, input);
 	pthread_mutex_unlock(&data->start);
 	while (data->murder != 1)
 	{
-		usleep (100);
-		if (data->regulator == thread_id % 2 && data->murder != 1
-			&& data->i.nmb_of_philos % 2 == 0)
-			take_forks(data, thread_id);
-		else if (data->regulator == thread_id % 3 && data->murder != 1
-			&& data->i.nmb_of_philos % 2 == 1)
-			take_forks(data, thread_id);
-		if (data->sync + data->philos[thread_id].time_to_death
-			< get_time() && data->murder != 1)
+		if (philo->time_to_death
+			< display_time(data))
 			self_report_death(data, thread_id);
+		if (display_time(data) > philo->potato)
+			take_forks(data, thread_id, input, philo);
+		usleep (100);
 	}
 	return (NULL);
 }
