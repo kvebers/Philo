@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 10:04:10 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 13:58:53 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:03:18 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	init_numbs(t_data *data)
 	data->murder1 = 0;
 	data->murder = 0;
 	data->philos_eaten = 0;
+	data->total_inits = 0;
 	data->total_times_to_eat = data->i.nmb_of_philos * data->i.times_to_eat;
 	if (data->i.nmb_of_philos % 2 == 0)
 		data->i.mp = data->i.times_to_eat;

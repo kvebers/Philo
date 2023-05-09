@@ -6,7 +6,7 @@
 /*   By: kvebers <kvebers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 12:15:46 by kvebers           #+#    #+#             */
-/*   Updated: 2023/05/09 12:55:28 by kvebers          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:07:13 by kvebers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct data
 	int				philos_eaten;
 	int				total_times_to_eat;
 	long			sync;
+	int				total_inits;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	start;
 	pthread_mutex_t	murdered1;
